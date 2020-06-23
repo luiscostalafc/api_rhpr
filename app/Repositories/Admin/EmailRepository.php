@@ -25,7 +25,7 @@ class EmailRepository extends BaseRepository
     public function getWithUsers($id)
     {
         try{
-            $this->obj = Cache::tags('email')->remember("email:$id", $this->expiration, function() {
+            $this->obj = Cache::tags('email')->remember("email:$id", $this->expiration, function() use ($id){
                 return $this->model->find($id)->with('user')->first();
             });
             $response = $this->obj ?? [];

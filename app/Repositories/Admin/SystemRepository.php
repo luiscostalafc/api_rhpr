@@ -25,7 +25,7 @@ class SystemRepository extends BaseRepository
     public function getWithUsers($id)
     {
         try{
-            $this->obj = Cache::tags('system')->remember("system:$id", $this->expiration, function() {
+            $this->obj = Cache::tags('system')->remember("system:$id", $this->expiration, function() use ($id){
                 return $this->model->where('id',$id)->with('users')->get();
             });
             $response = $this->obj ?? [];

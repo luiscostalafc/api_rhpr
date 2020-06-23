@@ -25,7 +25,7 @@ class PhoneRepository extends BaseRepository
     public function getWithUsers($id)
     {
         try{
-            $this->obj = Cache::tags('phone')->remember("phone:$id", $this->expiration, function() {
+            $this->obj = Cache::tags('phone')->remember("phone:$id", $this->expiration, function() use ($id){
                 return $this->model->find($id)->with('user')->first();
             });
             $response = $this->obj ?? [];

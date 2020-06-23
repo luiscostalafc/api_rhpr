@@ -14,6 +14,23 @@ class BaseRepository
     protected $options = 0;
 
     /**
+     * Get first.
+     *
+     * @return array
+     */
+    public function first()
+    {
+        try{
+            $this->obj = $this->model->first();
+            $this->statusCode = 200;
+        } catch(\Throwable $th) {
+            $this->contentError = $th->getMessage();
+        }
+
+        return $this->mountReturn('load', $this->obj, $this->statusCode, $this->contentError);
+    }
+    
+    /**
      * List all resources withoutTrashed.
      *
      * @return array
